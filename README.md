@@ -18,7 +18,7 @@ ID: SE221057
 ## 📸 Screenshots
 
 ### Register Screen
-![Register](/Screenshot/Screenshot%202026-05-11%20231102.png)
+![Register](/Screenshot/register.png)
 
 ### Login Screen
 ![Login](/Screenshot/Screenshot%202026-05-11%20231148.png)
