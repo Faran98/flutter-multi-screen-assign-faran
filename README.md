@@ -18,16 +18,16 @@ ID: SE221057
 ## 📸 Screenshots
 
 ### Register Screen
-![Register](screenshot/register.png)
+![Register](Screenshot/register.png)
 
 ### Login Screen
-![Login](screenshot/login.png)
+![Login](Screenshot/login.png)
 
 ### Dashboard
-![Dashboard](screenshot/dashboard.png)
+![Dashboard](Screenshot/dashboard.png)
 
 ### Detail Screen
-![Detail](screenshot/detail.png)
+![Detail](Screenshot/detail.png)
 
 ---
 
