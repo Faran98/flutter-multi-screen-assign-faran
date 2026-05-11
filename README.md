@@ -1,35 +1,37 @@
-# Flutter Multi-Screen Application Development
+# Flutter Multi-Screen Application
 
-## Student Information
+## 👨‍🎓 Student Info
+Name: Faran Khalil  
+ID: SE221057  
 
-| Field | Details |
-|-------|---------|
-| **Student Name** | Muhammad Hamza Tariq |
-| **Student ID** | *(Add your Student ID here)* |
-| **Course** | Mobile Application Development |
-| **Course Code** | SE-4308-CS-252-BS-SE-8A |
-| **University** | DHA Suffa University |
-| **Semester** | Spring 2026 |
-| **Due Date** | Tuesday, 12 May 2026 |
+---
 
-## Screenshots
+## 📱 Features
+- User Registration with validation
+- Login system with Remember Me
+- Dashboard with subjects
+- Detail screen for subjects
+- Clean UI with Flutter
 
-### 1. Register Screen
-![Register Screen](screenshots/register.png)
+---
 
-### 2. Login Screen
-![Login Screen](screenshots/login.png)
+## 📸 Screenshots
 
-### 3. Dashboard Screen
-![Dashboard Screen](screenshots/dashboard.png)
+### Register Screen
+![Register](screenshot/register.png)
 
-## Core Features Implemented
+### Login Screen
+![Login](screenshot/login.png)
 
-- Form Validation
-- Custom Validator Class
-- Enum Implementation
-- Controller Layer Architecture
-- Multi-screen Navigation
-- Password show/hide toggle
-- Remember Me functionality
+### Dashboard
+![Dashboard](screenshot/dashboard.png)
 
+### Detail Screen
+![Detail](screenshot/detail.png)
+
+---
+
+## 🚀 How to Run
+```bash
+flutter pub get
+flutter run
