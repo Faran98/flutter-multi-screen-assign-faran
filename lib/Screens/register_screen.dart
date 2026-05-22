@@ -9,447 +9,263 @@ class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() =>
-      _RegisterScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _RegisterScreenState
-    extends State<RegisterScreen> {
-
+class _RegisterScreenState extends State<RegisterScreen> {
   final formKey = GlobalKey<FormState>();
 
-  final firstNameController =
-      TextEditingController();
-
-  final lastNameController =
-      TextEditingController();
-
-  final emailController =
-      TextEditingController();
-
-  final passwordController =
-      TextEditingController();
-
-  final confirmController =
-      TextEditingController();
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmController = TextEditingController();
 
   Gender? selectedGender;
-
   bool obscurePassword = true;
-
   bool obscureConfirm = true;
-
   bool isValid = false;
 
   final controller = RegisterController();
 
+  // Simplified to evaluate the real-time visual state of the Form
   void validateForm() {
-
-    bool first =
-        firstNameController.text.isNotEmpty;
-
-    bool last =
-        lastNameController.text.isNotEmpty;
-
-    bool email = AppValidator
-            .emailValidator(
-                emailController.text) ==
-        null;
-
-    bool pass = AppValidator
-            .passwordValidator(
-                passwordController.text) ==
-        null;
-
-    bool confirm = AppValidator
-            .confirmPassword(
-              passwordController.text,
-              confirmController.text,
-            ) ==
-        null;
-
     setState(() {
-      isValid = controller.isFormValid(
-        firstName: first,
-        lastName: last,
-        email: email,
-        password: pass,
-        confirmPassword: confirm,
-      );
+      isValid = formKey.currentState?.validate() ?? false;
     });
   }
 
   @override
+  void dispose() {
+    firstNameController.dispose();
+    lastNameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      backgroundColor:
-          const Color(0xfff5f5f5),
-
+      backgroundColor: const Color(0xfff5f5f5),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding:
-                  const EdgeInsets.all(20),
-
+              padding: const EdgeInsets.all(20),
               child: Container(
                 width: 420,
-
-                padding:
-                    const EdgeInsets.all(20),
-
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   color: Colors.white,
-
-                  borderRadius:
-                      BorderRadius.circular(20),
-
-                  boxShadow: [
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: const [
                     BoxShadow(
                       color: Colors.black12,
                       blurRadius: 10,
                     )
                   ],
                 ),
-
                 child: Form(
                   key: formKey,
                   onChanged: validateForm,
-
                   child: Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start,
-
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       /// TITLE
                       Center(
                         child: Column(
                           children: [
-
                             Container(
                               width: 70,
                               height: 70,
-
-                              decoration:
-                                  BoxDecoration(
+                              decoration: BoxDecoration(
                                 color: Colors.blue,
-
-                                borderRadius:
-                                    BorderRadius.circular(
-                                        18),
+                                borderRadius: BorderRadius.circular(18),
                               ),
-
                               child: const Icon(
                                 Icons.school,
                                 color: Colors.white,
                                 size: 35,
                               ),
                             ),
-
-                            const SizedBox(
-                                height: 15),
-
+                            const SizedBox(height: 15),
                             const Text(
                               "Create Account",
-
                               style: TextStyle(
                                 fontSize: 28,
-                                fontWeight:
-                                    FontWeight.bold,
+                                fontWeight: FontWeight.bold,
                                 color: Colors.blue,
                               ),
                             ),
                           ],
                         ),
                       ),
-
                       const SizedBox(height: 25),
 
                       /// FIRST NAME
-                      const Text(
-                        "First Name",
-                      ),
-
+                      const Text("First Name"),
                       const SizedBox(height: 8),
-
                       TextFormField(
-                        controller:
-                            firstNameController,
-
-                        validator: (value) =>
-                            AppValidator
-                                .emptyValidator(
-                          value!,
+                        controller: firstNameController,
+                        validator: (value) => AppValidator.emptyValidator(
+                          value ?? "",
                           "First Name",
                         ),
-
                         decoration: InputDecoration(
                           hintText: "Ali",
-
-                          border:
-                              OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.circular(
-                                    12),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 20),
 
                       /// LAST NAME
-                      const Text(
-                        "Last Name",
-                      ),
-
+                      const Text("Last Name"),
                       const SizedBox(height: 8),
-
                       TextFormField(
-                        controller:
-                            lastNameController,
-
-                        validator: (value) =>
-                            AppValidator
-                                .emptyValidator(
-                          value!,
+                        controller: lastNameController,
+                        validator: (value) => AppValidator.emptyValidator(
+                          value ?? "",
                           "Last Name",
                         ),
-
                         decoration: InputDecoration(
                           hintText: "Khan",
-
-                          border:
-                              OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.circular(
-                                    12),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 20),
 
                       /// EMAIL
                       const Text("Email"),
-
                       const SizedBox(height: 8),
-
                       TextFormField(
-                        controller:
-                            emailController,
-
-                        validator: (value) =>
-                            AppValidator
-                                .emailValidator(
-                                    value!),
-
+                        controller: emailController,
+                        validator: (value) => AppValidator.emailValidator(value ?? ""),
                         decoration: InputDecoration(
-                          hintText:
-                              "student@uni.edu.pk",
-
-                          border:
-                              OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.circular(
-                                    12),
+                          hintText: "student@uni.edu.pk",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 20),
 
                       /// GENDER
                       const Text("Gender"),
-
                       const SizedBox(height: 8),
-
-                      DropdownButtonFormField<
-                          Gender>(
+                      DropdownButtonFormField<Gender>(
                         value: selectedGender,
-
-                        items:
-                            Gender.values.map(
-                          (gender) {
-                            return DropdownMenuItem(
-                              value: gender,
-                              child: Text(
-                                  gender.name),
-                            );
-                          },
-                        ).toList(),
-
+                        items: Gender.values.map((gender) {
+                          return DropdownMenuItem(
+                            value: gender,
+                            child: Text(gender.name),
+                          );
+                        }).toList(),
                         onChanged: (value) {
                           setState(() {
-                            selectedGender =
-                                value;
+                            selectedGender = value;
                           });
+                          validateForm(); // Force tracking on dropdown choice
                         },
-
+                        validator: (value) => value == null ? "Gender is required" : null,
                         decoration: InputDecoration(
-                          border:
-                              OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.circular(
-                                    12),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 20),
 
                       /// PASSWORD
                       const Text("Password"),
-
                       const SizedBox(height: 8),
-
                       TextFormField(
-                        controller:
-                            passwordController,
-
-                        obscureText:
-                            obscurePassword,
-
-                        validator: (value) =>
-                            AppValidator
-                                .passwordValidator(
-                                    value!),
-
+                        controller: passwordController,
+                        obscureText: obscurePassword,
+                        validator: (value) => AppValidator.passwordValidator(value ?? ""),
                         decoration: InputDecoration(
-                          hintText:
-                              "Pass@123",
-
-                          suffixIcon:
-                              IconButton(
+                          hintText: "Pass@123",
+                          suffixIcon: IconButton(
                             icon: Icon(
-                              obscurePassword
-                                  ? Icons.visibility
-                                  : Icons
-                                      .visibility_off,
+                              obscurePassword ? Icons.visibility : Icons.visibility_off,
                             ),
-
                             onPressed: () {
                               setState(() {
-                                obscurePassword =
-                                    !obscurePassword;
+                                obscurePassword = !obscurePassword;
                               });
                             },
                           ),
-
-                          border:
-                              OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.circular(
-                                    12),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 20),
 
                       /// CONFIRM PASSWORD
-                      const Text(
-                          "Confirm Password"),
-
+                      const Text("Confirm Password"),
                       const SizedBox(height: 8),
-
                       TextFormField(
-                        controller:
-                            confirmController,
-
-                        obscureText:
-                            obscureConfirm,
-
-                        validator: (value) =>
-                            AppValidator
-                                .confirmPassword(
+                        controller: confirmController,
+                        obscureText: obscureConfirm,
+                        validator: (value) => AppValidator.confirmPassword(
                           passwordController.text,
-                          value!,
+                          value ?? "",
                         ),
-
                         decoration: InputDecoration(
-                          hintText:
-                              "Re-enter password",
-
-                          suffixIcon:
-                              IconButton(
+                          hintText: "Re-enter password",
+                          suffixIcon: IconButton(
                             icon: Icon(
-                              obscureConfirm
-                                  ? Icons.visibility
-                                  : Icons
-                                      .visibility_off,
+                              obscureConfirm ? Icons.visibility : Icons.visibility_off,
                             ),
-
                             onPressed: () {
                               setState(() {
-                                obscureConfirm =
-                                    !obscureConfirm;
+                                obscureConfirm = !obscureConfirm;
                               });
                             },
                           ),
-
-                          border:
-                              OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.circular(
-                                    12),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 25),
 
                       /// REGISTER BUTTON
                       SizedBox(
                         width: double.infinity,
                         height: 55,
-
                         child: ElevatedButton(
-                          style:
-                              ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Colors.blue,
-
-                            shape:
-                                RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(
-                                      12),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
                             ),
                           ),
+                          // Button is active so validation errors show up interactively on tap
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Registration Successful"),
+                                ),
+                              );
 
-                          onPressed: isValid
-                              ? () {
-
-                                  if (formKey
-                                      .currentState!
-                                      .validate()) {
-
-                                    ScaffoldMessenger.of(
-                                            context)
-                                        .showSnackBar(
-                                      const SnackBar(
-                                        content: Text(
-                                          "Registration Successful",
-                                        ),
-                                      ),
-                                    );
-
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) =>
-                                            const LoginScreen(),
-                                      ),
-                                    );
-                                  }
-                                }
-                              : null,
-
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => const LoginScreen(),
+                                ),
+                              );
+                            }
+                          },
                           child: const Text(
                             "Create Account",
-
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
