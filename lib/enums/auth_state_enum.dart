@@ -1,5 +1,1 @@
-enum Gender {
-  male,
-  female,
-  other
-}
+enum CourseState { loading, success, error, empty }
