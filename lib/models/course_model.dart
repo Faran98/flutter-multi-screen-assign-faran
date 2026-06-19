@@ -1,42 +1,39 @@
-class CourseModel {
+import 'package:hive/hive.dart';
+
+part 'course_model.g.dart';
+
+@HiveType(typeId: 0)
+class CourseModel extends HiveObject {
+  @HiveField(0)
   final int id;
-  final int userId;
+  @HiveField(1)
   final String title;
+  @HiveField(2)
   final String body;
 
   CourseModel({
     required this.id,
-    required this.userId,
     required this.title,
     required this.body,
   });
 
   factory CourseModel.fromJson(Map<String, dynamic> json) {
     return CourseModel(
-      id: json['id'],
-      userId: json['userId'],
-      title: json['title'],
-      body: json['body'],
+      id: json['id'] is String ? int.parse(json['id']) : (json['id'] ?? 0),
+      title: json['title'] ?? '',
+      body: json['body'] ?? '',
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'userId': userId,
-      'title': title,
-      'body': body,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'title': title,
+    'body': body,
+  };
 
-  CourseModel copyWith({
-    int? id,
-    int? userId,
-    String? title,
-    String? body,
-  }) {
+  CourseModel copyWith({int? id, String? title, String? body}) {
     return CourseModel(
       id: id ?? this.id,
-      userId: userId ?? this.userId,
       title: title ?? this.title,
       body: body ?? this.body,
     );

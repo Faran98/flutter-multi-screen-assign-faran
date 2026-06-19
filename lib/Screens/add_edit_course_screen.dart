@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../controllers/course_controller.dart';
 import '../models/course_model.dart';
 
@@ -15,9 +16,8 @@ class _AddEditCourseScreenState extends State<AddEditCourseScreen> {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _bodyController = TextEditingController();
-  final _controller = CourseController();
-
   bool _isLoading = false;
+
   bool get _isEditing => widget.course != null;
 
   @override
@@ -40,18 +40,17 @@ class _AddEditCourseScreenState extends State<AddEditCourseScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     setState(() => _isLoading = true);
+    final provider = context.read<CourseController>();
 
     try {
-      CourseModel result;
-
       if (_isEditing) {
-        result = await _controller.updateCourse(
+        await provider.modifyCourse(
           widget.course!.id,
           _titleController.text.trim(),
           _bodyController.text.trim(),
         );
       } else {
-        result = await _controller.addCourse(
+        await provider.addNewCourse(
           _titleController.text.trim(),
           _bodyController.text.trim(),
         );
@@ -68,7 +67,7 @@ class _AddEditCourseScreenState extends State<AddEditCourseScreen> {
             backgroundColor: Colors.green,
           ),
         );
-        Navigator.pop(context, result);
+        Navigator.pop(context);
       }
     } catch (e) {
       if (mounted) {
@@ -90,7 +89,6 @@ class _AddEditCourseScreenState extends State<AddEditCourseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xfff5f5f5),
-
       appBar: AppBar(
         backgroundColor: const Color(0xff1565c0),
         title: Text(
@@ -99,7 +97,6 @@ class _AddEditCourseScreenState extends State<AddEditCourseScreen> {
         ),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -117,13 +114,11 @@ class _AddEditCourseScreenState extends State<AddEditCourseScreen> {
                   )
                 ],
               ),
-
               child: Form(
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     /// HEADER ICON
                     Center(
                       child: Column(
